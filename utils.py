@@ -1,6 +1,5 @@
 
 import smtplib
-import matplotlib.pyplot as plt
 import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
