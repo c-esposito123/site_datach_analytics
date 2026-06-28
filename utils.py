@@ -21,6 +21,21 @@ CSV_PATH = "base_projeto.csv"
 
 NOME_EMPRESA = "DataCH Analytics"
 
+def menu():
+    st.sidebar.title("📊 Menu")
+
+    escolha = st.sidebar.radio(
+        "Navegação",
+        [
+            "🏠 Home",
+            "📈 Gráficos",
+            "📋 Tabelas",
+            "⬇️ Download Relatório",
+            "📧 Enviar Email"
+        ]
+    )
+
+    return escolha
 
 @st.cache_data
 def carregar_dados(caminho: str = CSV_PATH) -> pd.DataFrame:
