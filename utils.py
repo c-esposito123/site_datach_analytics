@@ -24,7 +24,7 @@ NOME_EMPRESA = "DataCH Analytics"
 
 @st.cache_data
 def carregar_dados(caminho: str = CSV_PATH) -> pd.DataFrame:
-    df = pd.read_csv(caminho)
+    df = pd.read_csv("base_projeto")
 
     # Normalização leve de tipos
     colunas_numericas = [
