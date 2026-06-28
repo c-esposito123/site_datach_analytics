@@ -22,7 +22,19 @@ CSV_PATH = "base_projeto.csv"
 
 NOME_EMPRESA = "DataCH Analytics"
 
+# --- Navegação entre Páginas --- #
+pg = st.navigation(
+    [
+        st.Page("pages/home.py", title="🏠 Página Inicial"),
+        st.Page("pages/graficos.py", title="📈 Gráficos"),
+        st.Page("pages/tabelas.py", title="📋 Tabelas"),
+        st.Page("pages/dowload_relatorio.py", title="📄 Download do Relatório"),
+        st.Page("pages/enviar_email.py", title="📧 Enviar E-mail"),
+    ],
+    position="top",
+)
 
+pg.run()
 
 @st.cache_data
 def carregar_dados(caminho: str = CSV_PATH) -> pd.DataFrame:
