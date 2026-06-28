@@ -1,4 +1,5 @@
 import streamlit as st
+
 from utils.sidebar import menu
 
 from pages import (
@@ -9,7 +10,7 @@ from pages import (
     enviar_email,
 )
 
-st.set_page_config(page_title="DataCH Analytics", layout="wide")
+st.set_page_config(page_title="DataCH Analytics", page_icon="📊", layout="wide")
 
 pagina = menu()
 
