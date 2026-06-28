@@ -1,58 +1,41 @@
 import streamlit as st
-from utils import montar_sidebar, NOME_EMPRESA
+
+from utils.data import carregar_dados
+from utils.sidebar import saudacao
 
 
 def render():
-    # Sidebar
-    montar_sidebar()
+    saudacao()
 
-    # Título
-    st.title(f"📊 {NOME_EMPRESA}")
-
-    st.subheader("Plataforma de Análise de Cancelamento de Clientes (Churn)")
-
+    st.title("🏠 Home — DataCH Analytics")
     st.markdown(
-        """
-        Bem-vindo(a) à plataforma de análise de dados da **DataCH Analytics**.
-
-        Somos uma empresa especializada em transformar dados brutos em decisões de negócio.
-        Este painel foi desenvolvido para responder à pergunta que mais importa para empresas
-        de serviços recorrentes: **por que nossos clientes estão cancelando — e o que podemos
-        fazer sobre isso?**
-        """
+        "Bem-vindo à plataforma de análise de **churn de clientes**. "
+        "Use o menu lateral para navegar entre gráficos, tabelas, download do relatório e envio por e-mail."
     )
 
-    st.markdown("---")
+    try:
+        df = carregar_dados()
+    except FileNotFoundError:
+        st.error("Arquivo `base_projeto.csv` não encontrado na raiz do projeto.")
+        return
 
-    col1, col2 = st.columns(2)
+    total_clientes = len(df)
+    churn_label = df["Churn Label"].astype(str).str.strip()
+    qtd_churn = int((churn_label == "Yes").sum())
+    taxa_churn = (qtd_churn / total_clientes * 100) if total_clientes else 0
+    receita_perdida = df.loc[churn_label == "Yes", "Total Revenue"].sum()
 
-    with col1:
-        st.markdown("### 🧭 O que você encontra aqui")
-        st.markdown(
-            """
-            - **📋 Tabela** — visão estática e detalhada da base de clientes.
-            - **📈 Gráficos** — visualizações interativas e estáticas sobre o churn.
-            - **📧 Envio por E-mail** — envie um gráfico ou um relatório de insights.
-            - **📥 Download do Relatório** — baixe a análise completa em `.txt`.
-            """
-        )
-
-    with col2:
-        st.markdown("### 🏢 Sobre a DataCH Analytics")
-        st.markdown(
-            """
-            Fundada com o propósito de aproximar dados e decisões, a DataCH Analytics atua
-            com diagnóstico de cancelamento de clientes (churn), modelagem preditiva e geração
-            de relatórios executivos para empresas de telecomunicações, assinaturas e serviços.
-
-            Nosso método combina estatística, visualização de dados e recomendações práticas
-            — sempre orientadas pelo que os números realmente mostram.
-            """
-        )
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Total de clientes", f"{total_clientes:,}")
+    col2.metric("Clientes em churn", f"{qtd_churn:,}")
+    col3.metric("Taxa de churn", f"{taxa_churn:.1f}%")
+    col4.metric("Receita perdida", f"${receita_perdida:,.0f}")
 
     st.markdown("---")
-
-    st.info(
-        "👈 Use a barra lateral para informar seu nome e navegar entre as páginas do relatório.",
-        icon="ℹ️",
+    st.markdown("#### Navegação rápida")
+    st.markdown(
+        "- **📈 Gráficos** — visualizações sobre o comportamento de churn\n"
+        "- **📋 Tabelas** — dados detalhados e filtráveis\n"
+        "- **⬇️ Download Relatório** — relatório de insights em texto\n"
+        "- **📧 Enviar Email** — compartilhe gráficos e relatórios por e-mail"
     )
