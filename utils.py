@@ -13,7 +13,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 
-pg.run()
 
 plt.style.use("seaborn-v0_8-whitegrid")
 PALETA = ["#2E86AB", "#E84855", "#F9A03F", "#3B1F2B", "#84BC9C"]
