@@ -13,6 +13,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 
+# --- Páginas de navegação --- #
+pg = st.navigation(
+    [
+        st.Page('./pages/home.py', title='Página Inicial'),
+        st.Page('./pages/graficopy', title='Gráficos'),
+        st.Page('./pages/tabelas.py', title='Tabela'),
+        st.Page('./pages/dowload_relatorio.py.py', title='Dowload do Relatório'),
+        st.Page('./pages/enviar_email.py', title='Enviar e-mail')
+    ],
+    position='top'
+)
+
 plt.style.use("seaborn-v0_8-whitegrid")
 PALETA = ["#2E86AB", "#E84855", "#F9A03F", "#3B1F2B", "#84BC9C"]
 
